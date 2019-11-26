@@ -1,13 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <database>
 <!--    <people>-->
-        <person id="1">
-            <id>1</id>
-            <firstName>Peter</firstName>
-            <lastName>Parker</lastName>
-            <startDate>1/11/2019</startDate>
-            <active>True</active>
-            <wage>20</wage>
-        </person>
+        
         <person id="2">
             <id>2</id>
             <firstName>John</firstName>
@@ -16,14 +10,7 @@
             <active>False</active>
             <wage>20</wage>
         </person>
-        <person id="3">
-            <id>3</id>
-            <firstName>Tony</firstName>
-            <lastName>Stark</lastName>
-            <startDate>1/11/2019</startDate>
-            <active>True</active>
-            <wage>20</wage>
-        </person>
+        
         <person id="4">
             <id>4</id>
             <firstName>Wonder</firstName>
@@ -32,14 +19,7 @@
             <active>True</active>
             <wage>20</wage>
         </person>
-        <person id="5">
-            <id>5</id>
-            <firstName>Super</firstName>
-            <lastName>Man</lastName>
-            <startDate>1/11/2019</startDate>
-            <active>False</active>
-            <wage>20</wage>
-        </person>
+        
         <person id="6">
             <id>6</id>
             <firstName>Poison</firstName>
@@ -50,16 +30,7 @@
         </person>
 <!--    </people>
     <projects>-->
-        <project id="1">
-            <id>1</id>
-            <name>DC</name>
-            <startDate>1/11/2019</startDate>
-            <endDate>31/12/2019</endDate>
-                <programmerID>6</programmerID>
-                <programmerActivity>Frontend</programmerActivity>
-                <programmerID>4</programmerID>
-                <programmerActivity>Backend</programmerActivity>
-        </project>
+        
         <project id="2">
             <id>2</id>
             <name>Marvel</name>
@@ -72,4 +43,72 @@
         </project>
 
 <!--    </projects>-->
+<project>
+<id>1</id>
+<name>DC</name>
+<startDate>01/11/2019</startDate>
+<endDate>31/12/2019</endDate>
+<ProgrammerID>6</ProgrammerID>
+<programmerActivity>Frontend</programmerActivity>
+<ProgrammerID>4</ProgrammerID>
+<programmerActivity>Backend</programmerActivity>
+</project>
+<project>
+<id>2</id>
+<name>Marvel</name>
+<startDate>01/11/2019</startDate>
+<endDate>31/12/2019</endDate>
+<ProgrammerID>1</ProgrammerID>
+<programmerActivity>Frontend</programmerActivity>
+<ProgrammerID>3</ProgrammerID>
+<programmerActivity>Backend</programmerActivity>
+</project>
+<person>
+<id>1</id>
+<firstName>Peter</firstName>
+<lastName>Parker</lastName>
+<startDate>01/11/2019</startDate>
+<active>true</active>
+<wage>20</wage>
+</person>
+<person>
+<id>2</id>
+<firstName>John</firstName>
+<lastName>Smith</lastName>
+<startDate>01/11/2019</startDate>
+<active>false</active>
+<wage>20</wage>
+</person>
+<person>
+<id>3</id>
+<firstName>Tony</firstName>
+<lastName>Stark</lastName>
+<startDate>01/11/2019</startDate>
+<active>true</active>
+<wage>20</wage>
+</person>
+<person>
+<id>4</id>
+<firstName>Wonder</firstName>
+<lastName>Woman</lastName>
+<startDate>01/11/2019</startDate>
+<active>true</active>
+<wage>20</wage>
+</person>
+<person>
+<id>5</id>
+<firstName>Super</firstName>
+<lastName>Man</lastName>
+<startDate>01/11/2019</startDate>
+<active>false</active>
+<wage>20</wage>
+</person>
+<person>
+<id>6</id>
+<firstName>Poison</firstName>
+<lastName>Ivy</lastName>
+<startDate>01/11/2019</startDate>
+<active>true</active>
+<wage>20</wage>
+</person>
 </database>

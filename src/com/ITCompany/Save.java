@@ -14,6 +14,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class Save {
@@ -32,36 +33,42 @@ public class Save {
             }
 
             //ADD
-            for (ProjectTeam project: list2) {
-                String id = String.valueOf(project.getId());
-                String name = project.getName();
-                String startDate = project.getStartDate().toString();
-                String endDate = project.getEndDate().toString();
 
+            for (int k = 0; k < list2.size(); k++) {
+                int size = list2.get(k).getProgrammers().size();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String id = String.valueOf(list2.get(k).getId());
+                String name = list2.get(k).getName();
+                String startDate = (dateFormat.format(list2.get(k).getStartDate()));
+                String endDate = (dateFormat.format(list2.get(k).getEndDate()));
                 //project
                 NodeList database = doc.getElementsByTagName("database");
                 Element projectEle = doc.createElement("project");
                 database.item(0).appendChild(projectEle);
-
                 //id
                 Element pID = doc.createElement("id");
                 pID.appendChild(doc.createTextNode(id));
                 projectEle.appendChild(pID);
-
                 //name
                 Element pName = doc.createElement("name");
                 pName.appendChild(doc.createTextNode(name));
                 projectEle.appendChild(pName);
-
                 //Start Date
                 Element pStartDate = doc.createElement("startDate");
                 pStartDate.appendChild(doc.createTextNode(startDate));
                 projectEle.appendChild(pStartDate);
-
                 //End Date
                 Element pEndDate = doc.createElement("endDate");
                 pEndDate.appendChild(doc.createTextNode(endDate));
                 projectEle.appendChild(pEndDate);
+                for (int i = 0; i < size; i++) {
+                    Element programmerID = doc.createElement("ProgrammerID");
+                    programmerID.appendChild(doc.createTextNode(Integer.toString(list2.get(k).getProgrammers().get(i))));
+                    Element programmerActivity = doc.createElement("programmerActivity");
+                    programmerActivity.appendChild(doc.createTextNode(list2.get(k).getActivity().get(i)));
+                    projectEle.appendChild(programmerID);
+                    projectEle.appendChild(programmerActivity);
+                }
             }
 
             NodeList programmerList = doc.getElementsByTagName("person");
@@ -73,10 +80,11 @@ public class Save {
 
             //ADD Programmers
             for (ActiveProgrammers programmer: list1) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String id = String.valueOf(programmer.getId());
                 String firstName = programmer.getFirstName();
                 String lastName = programmer.getLastName();
-                String startDate = programmer.getStartDate().toString();
+                String startDate = (dateFormat.format(programmer.getStartDate()));
                 String active = String.valueOf(programmer.isActive());
                 String wage = String.valueOf(programmer.getWage());
 
@@ -122,15 +130,7 @@ public class Save {
             StreamResult result = new StreamResult(new File("DB.xml"));
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.transform(source, result);
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
+        } catch (SAXException | IOException | ParserConfigurationException | TransformerException e) {
             e.printStackTrace();
         }
     }

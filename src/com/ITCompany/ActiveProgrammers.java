@@ -117,4 +117,8 @@ public class ActiveProgrammers {
             }
         }
     }
+
+    public double calculateSalary(ActiveProgrammers person) {
+        return person.getDaysWorked()*person.getWage();
+    }
 }

@@ -13,7 +13,7 @@ public class ProjectTeam {
     private Date endDate;
     private ArrayList<Integer> programmers;
     private ArrayList<String> activity;
-
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public ProjectTeam(int id, String name, Date startDate, Date endDate, ArrayList<Integer> programmers, ArrayList<String> activity) {
         this.id = id;
@@ -78,7 +78,7 @@ public class ProjectTeam {
                 if(list1.get(j).getId()==programmerID){
                     list1.get(j).setActive(true);
                     list1.get(j).setStartDate(startDate);
-                    System.out.println("Programmer "+list1.get(j).getId()+" changed status to "+list1.get(j).isActive()+" starting from "+list1.get(j).getStartDate());
+                    System.out.println("Programmer "+list1.get(j).getId()+" changed status to "+list1.get(j).isActive()+" starting from "+dateFormat.format(list1.get(j).getStartDate()));
                     count--;
                 }
 

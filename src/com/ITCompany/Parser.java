@@ -51,7 +51,8 @@ class Parser {
     }
     static void printPeopleMethod(ArrayList<ActiveProgrammers> list1) {
         for (ActiveProgrammers element : list1) {
-            System.out.println(element.getId() + ". " + element.getFirstName() + " " + element.getLastName() + ": " + element.getStartDate() + ", active: " + element.isActive() + ", wage(h):" + element.getWage());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            System.out.println(element.getId() + ". " + element.getFirstName() + " " + element.getLastName() + ": " + dateFormat.format(element.getStartDate()) + ", active: " + element.isActive() + ", wage(h):" + element.getWage());
         }
     }
 
@@ -75,7 +76,7 @@ class Parser {
                     String name = project.getElementsByTagName("name").item(0).getTextContent();
                     String start = project.getElementsByTagName("startDate").item(0).getTextContent();
                     Date startDate = dateFormat.parse(start);
-                    String end = project.getElementsByTagName("startDate").item(0).getTextContent();
+                    String end = project.getElementsByTagName("endDate").item(0).getTextContent();
                     Date endDate = dateFormat.parse(end);
                     for (int k = 0; k < count; k++) {
                         int programmerID = Integer.parseInt(project.getElementsByTagName("programmerID").item(k).getTextContent());
@@ -95,8 +96,9 @@ class Parser {
         }
     }
     static void printProjectsMethod(ArrayList<ProjectTeam> list2) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         for (ProjectTeam element : list2) {
-            System.out.println(element.getId() + ". " + element.getName() + ": start:" + element.getStartDate() + ", end: " + element.getEndDate() + ", programmers: " + element.getProgrammers() + ", activity: " + element.getActivity());
+            System.out.println(element.getId() + ". " + element.getName() + ": start:" + dateFormat.format(element.getStartDate()) + ", end: " + dateFormat.format(element.getEndDate()) + ", programmers: " + element.getProgrammers() + ", activity: " + element.getActivity());
         }
     }
 }
