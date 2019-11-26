@@ -10,6 +10,7 @@ class Menu {
     private ActiveProgrammers createPerson = new ActiveProgrammers();
     private ActiveProgrammers editPeople = new ActiveProgrammers();
     private ProjectTeam createProject = new ProjectTeam();
+    private Save saveProgram = new Save();
     static Scanner scanChoice = new Scanner(System.in);
     void PasswordMethod() throws ParseException {
         System.out.println("Hello!");
@@ -42,7 +43,8 @@ class Menu {
             System.out.println("5.Edit Projects");
             System.out.println("6.Create Projects");
             System.out.println("7.Company Report");
-            System.out.println("8.Exit");
+            System.out.println("8.Save Program");
+            System.out.println("9.Exit");
             Scanner scanChoice = new Scanner(System.in);
             System.out.println();
             int menuChoice = scanChoice.nextInt();
@@ -91,7 +93,12 @@ class Menu {
                     System.out.println("Company Report");
                     System.out.println();
                     break;
+
                 case 8:
+                    //SAVE
+                    saveProgram.saveMethod(list1, list2);
+                    System.out.println("Program Saved!");
+                case 9:
                     //Exit
                     System.out.println("Goodbye!");
                     System.out.println();
