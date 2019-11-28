@@ -117,7 +117,6 @@ public class ProjectTeam {
             }
 
         }
-        System.out.println("Exit "+exitStatus);
         ProjectTeam member = new ProjectTeam(id, name, startDate, endDate, programmers, activity);
         list2.add(member);
         for (ProjectTeam element : list2) {
