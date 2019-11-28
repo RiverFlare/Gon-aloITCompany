@@ -3,6 +3,7 @@ package com.ITCompany;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -27,8 +28,8 @@ public class ProjectTeam {
     public ProjectTeam() {
 
     }
-
-    void addProject(ArrayList<ProjectTeam> list2, ArrayList<ActiveProgrammers> list1) throws ParseException {
+// TO ADD A NEW PROJECT
+    void addProject(ArrayList<ProjectTeam> list2, ArrayList<ActiveProgrammers> list1, Date newDate) throws ParseException {
         ArrayList<Integer> programmers = new ArrayList();
         ArrayList<String> activity = new ArrayList();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -40,17 +41,27 @@ public class ProjectTeam {
         String name =  Menu.scanChoice.next();
         System.out.println("Today's date will be used as Start Date");
         Date startDate = new Date();
-        //change startDate insertion
-        //change startDate insertion
-        //change startDate insertion
-        //change startDate insertion
-        System.out.println("Insert end Date(dd/mm/yyyy):");
-        String end = Menu.scanChoice.next();
-        Date endDate = dateFormat.parse(end);
-        //change startDate insertion
-        //change startDate insertion
-        //change startDate insertion
-        //change startDate insertion
+        Date endDate = null;
+        boolean next = false;
+        while(!next) {
+            System.out.println("Insert end Date(dd/mm/yyyy):");
+            String end = Menu.scanChoice.next();
+            
+            try {
+                endDate = dateFormat.parse(end);
+                if (endDate.after(newDate)) {
+                    next = true;
+                } else {
+                    System.out.println("please insert a valid date");
+                    System.out.println("The system date is " + dateFormat.format(newDate));
+                }
+
+            } catch (ParseException e) {
+                System.out.println("please insert a valid date");
+
+            }
+        }
+
         boolean exitStatus = true;
         while(exitStatus==true){
             System.out.println("Available Programmers: ");
@@ -65,14 +76,12 @@ public class ProjectTeam {
             int programmerID = Menu.scanChoice.nextInt();
             for (int j = 0; j <list1.size(); j++) {
                 if(list1.get(j).getId()==programmerID&&list1.get(j).isActive()==true){
-                    System.out.println("The choosen programmer is not available");
-                    addProject(list2, list1);
+                    System.out.println("The chosen programmer is not available");
+                    addProject(list2, list1, newDate);
                 }
 
             }
-            // change person's ID to active and check if it wasnt active before
-            // change person's ID to active and check if it wasnt active before
-            // change person's ID to active and check if it wasnt active before
+
             programmers.add(programmerID);
             for (int j = 0; j <list1.size(); j++) {
                 if(list1.get(j).getId()==programmerID){
@@ -83,18 +92,9 @@ public class ProjectTeam {
                 }
 
             }
-//            System.out.println("Insert 2nd programmer's ID:");
-//            programmerID = Menu.scanChoice.nextInt();
-//            // change person's ID to active and check if it wasnt active before
-//            // change person's ID to active and check if it wasnt active before
-//            // change person's ID to active and check if it wasnt active before
-//            programmers.add(programmerID);
             System.out.println("Insert programmer's activity:");
             String programmerActivity = Menu.scanChoice.next();
             activity.add(programmerActivity);
-//            System.out.println("Insert 2nd programmer's activity:");
-//            programmerActivity = Menu.scanChoice.next();
-//            activity.add(programmerActivity);
             System.out.println("Do you want to add another programmer? (y - yes; n - no)");
             String choice = Menu.scanChoice.next();
                 if (!choice.equals("y")) {
@@ -109,7 +109,7 @@ public class ProjectTeam {
         ProjectTeam member = new ProjectTeam(id, name, startDate, endDate, programmers, activity);
         list2.add(member);
         for (ProjectTeam element : list2) {
-            System.out.println(element.getId() + ". " + element.getName() + ": " + element.getStartDate() + ", " + element.getEndDate() + ", programmers: " + element.getProgrammers() + ", activities:" + element.getActivity());
+            System.out.println(element.getId() + ". " + element.getName() + ": " + dateFormat.format(element.getStartDate()) + ", " + dateFormat.format(element.getEndDate()) + ", programmers: " + element.getProgrammers() + ", activities:" + element.getActivity());
         }
     }
 

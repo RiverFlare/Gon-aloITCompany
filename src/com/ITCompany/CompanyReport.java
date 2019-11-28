@@ -9,31 +9,6 @@ import java.util.Date;
 
 public class CompanyReport {
 
-/*    n1: total number of project teams
-    n2: total number of active programmers
-    n3: total active programmers that have worked this month
-    n4: days worked this month by all the programmers
-    n5: days left of work by all the active programmers
-    n6: team's number
-    n7: performed activity's name
-    n8: start date of work
-    n9: end date of work
-    n10: duration of work
-    n11: days worked this month by this programmer
-    n12: salary of this person by days worked, assuming the different salary types.*/
-    int projectTeams;
-    int activeProg;
-    int activeProgWorked;
-    int daysWorked;
-    int daysLeftWork;
-    String projectName;
-    String activityName;
-    /*date startDate;
-    date endDate;*/
-    int duration;
-    int daysWorkedProg;
-    int salaryProg;
-
 
     public static void companyReport(ArrayList<ActiveProgrammers> list1, ArrayList<ProjectTeam> list2) {
 
@@ -50,8 +25,8 @@ public class CompanyReport {
         int daysLeft = 0;
 
         for (ActiveProgrammers prog : list1) {
-            totalActiveDays += prog.getDaysWorked();
-            if (prog.isActive() || (!prog.isActive() && prog.getDaysWorked() != 0)) {
+            totalActiveDays += prog.getDaysWorked(list1, prog.getId());
+            if (prog.isActive() || (!prog.isActive() && prog.getDaysWorked(list1, prog.getId()) != 0)) {
                 active++;
             }
         }
@@ -73,11 +48,13 @@ public class CompanyReport {
 
         System.out.println("Project Team details: ");
         for (ProjectTeam proj : list2) {
-            System.out.println("Project Team " + proj.getId());
+            System.out.println();
+            System.out.println("Project Team " + proj.getId() + ". " + proj.getName());
+            System.out.println();
             for (int i = 0; i < proj.getProgrammers().size(); i++) {
                 for (ActiveProgrammers prog : list1) {
                     if (prog.getId() == proj.getProgrammers().get(i)) {
-                        System.out.println(prog.getLastName() + ", " + prog.getFirstName() + ", in charge of " + proj.getActivity().get(i) + " from " + dateFormat.format(prog.getStartDate()) + " to " + dateFormat.format(proj.getEndDate()) + ", has worked " + prog.getDaysWorked() + " days this month. Total salary: " + prog.calculateSalary(prog) + "€");
+                        System.out.println(prog.getFirstName() + " " + prog.getLastName() + ", " +  "in charge of " + proj.getActivity().get(i) + " from " + dateFormat.format(prog.getStartDate()) + " to " + dateFormat.format(proj.getEndDate()) + ", has worked " + prog.getDaysWorked(list1, prog.getId()) + " days this month. Total salary: " + prog.calculateSalary(list1, prog.getId()) + "€");
                         break;
                     }
                 }

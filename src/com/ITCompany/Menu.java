@@ -1,7 +1,10 @@
 package com.ITCompany;
 
+import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 
 class Menu {
@@ -11,20 +14,41 @@ class Menu {
     private ActiveProgrammers editPeople = new ActiveProgrammers();
     private ProjectTeam createProject = new ProjectTeam();
     private Save saveProgram = new Save();
+    private CompanyReport printReport = new CompanyReport();
     static Scanner scanChoice = new Scanner(System.in);
+    private static Date today = new Date();
+
+    public static Date getToday() {
+        return today;
+    }
+
+    public void setToday(Date today) {
+        this.today = today;
+    }
+
     void PasswordMethod() throws ParseException {
         System.out.println("Hello!");
-        Scanner in = new Scanner(System.in);
-        while (true) {
-            System.out.println("Please insert password to continue:");
-            int password = in.nextInt();
+        Boolean pass = false;
+        while (!pass) {
+//        Scanner in = new Scanner(System.in);
+        System.out.println("Please insert password: (20112019)");
+        String in = Menu.scanChoice.nextLine();
 
-            if (password == 20112019) {
-                MenuMethod();
-            } else {
-                System.out.println("Incorrect Password");
+        Integer Password;
+
+            try {
+                Password = Integer.parseInt(String.valueOf(in));
+                if (Password == 20112019) {
+                    pass = true;
+                } else {
+                    System.out.println("Incorrect Password");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Password consists of only numbers. Don't insert letters.");
             }
+
         }
+        MenuMethod();
     }
 
     private void MenuMethod() throws ParseException {
@@ -32,19 +56,19 @@ class Menu {
       Parser.ParserMethodPeople(list1);
       Parser parserProjects = new Parser();
       Parser.ParserMethodProjects(list2);
-//        ActiveProgrammers createPerson = new ActiveProgrammers();
-//        createPerson.addPerson(list1);
+      Date newDate = new Date();
+      newDate = Parser.readDate();
         while (true) {
             System.out.println("Menu");
             System.out.println("1.View Programmers");
             System.out.println("2.Edit Programmers");
             System.out.println("3.Create Programmers");
             System.out.println("4.View Projects");
-            System.out.println("5.Edit Projects");
-            System.out.println("6.Create Projects");
-            System.out.println("7.Company Report");
-            System.out.println("8.Save Program");
-            System.out.println("9.Exit");
+            System.out.println("5.Create Projects");
+            System.out.println("6.Company Report");
+            System.out.println("7.Save Program");
+            System.out.println("8.Update System's Date");
+            System.out.println("0.Exit");
             Scanner scanChoice = new Scanner(System.in);
             System.out.println();
             int menuChoice = scanChoice.nextInt();
@@ -78,27 +102,32 @@ class Menu {
                     System.out.println();
                     break;
                 case 5:
-                    //Edit Project List
-                    System.out.println("Edit Project List");
+                    //Create New Project
+                    System.out.println("Create New Project");
+                    createProject.addProject(list2, list1, newDate);
                     System.out.println();
                     break;
                 case 6:
-                    //Create New Project
-                    System.out.println("Create New Project");
-                    createProject.addProject(list2, list1);
-                    System.out.println();
-                    break;
-                case 7:
                     //Company Report
                     System.out.println("Company Report");
+                    printReport.companyReport(list1, list2);
                     System.out.println();
                     break;
 
-                case 8:
+                case 7:
                     //SAVE
                     saveProgram.saveMethod(list1, list2);
                     System.out.println("Program Saved!");
-                case 9:
+                    break;
+                case 8:
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(newDate);
+                    c.add(Calendar.DATE, 1);
+                    newDate = c.getTime();
+                    setToday(newDate);
+                    System.out.println("Date set to "+getToday());
+                    break;
+                case 0:
                     //Exit
                     System.out.println("Goodbye!");
                     System.out.println();

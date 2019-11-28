@@ -38,23 +38,6 @@ public interface Programmers {
             this.wage = wage;
         }
 
-/*        static void ParserMethodPeopleToArray () {
-            try{
-                FileInputStream fis = new FileInputStream(new File("/DB.xml"));
-                XMLDecoder decoder = new XMLDecoder(fis);
-
-                person p1 = (person)decoder.readObject();
-                decoder.close();
-                fis.close();
-
-                System.out.print(p1.getId());
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }*/
 
         public int getId() {
             return id;

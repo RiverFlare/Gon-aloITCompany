@@ -20,7 +20,7 @@ class Parser {
     Parser() {
     }
 
-
+// TO READ EVERY PERSON'S INFORMATION FROM XML
     static void ParserMethodPeople(ArrayList<ActiveProgrammers> list1) {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -39,7 +39,7 @@ class Parser {
                     String start = person.getElementsByTagName("startDate").item(0).getTextContent();
                     Date startDate = dateFormat.parse(start);
                     boolean active = Boolean.parseBoolean(person.getElementsByTagName("active").item(0).getTextContent());
-                    int wage = Integer.parseInt(person.getElementsByTagName("wage").item(0).getTextContent());
+                    double wage = Double.parseDouble(person.getElementsByTagName("wage").item(0).getTextContent());
 
                     ActiveProgrammers member = new ActiveProgrammers(id, firstName, lastName, startDate, active, wage);
                     list1.add(member);
@@ -49,6 +49,7 @@ class Parser {
             e.printStackTrace();
         }
     }
+    //PRINTS EVERY PERSON'S INFORMATION
     static void printPeopleMethod(ArrayList<ActiveProgrammers> list1) {
         for (ActiveProgrammers element : list1) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -56,7 +57,7 @@ class Parser {
         }
     }
 
-
+    // TO READ EVERY PROJECT'S INFORMATION FROM XML
     static void ParserMethodProjects(ArrayList<ProjectTeam> list2) {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -95,11 +96,31 @@ class Parser {
             e.printStackTrace();
         }
     }
+    //PRINTS EVERY PROJECT'S INFORMATION
     static void printProjectsMethod(ArrayList<ProjectTeam> list2) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         for (ProjectTeam element : list2) {
             System.out.println(element.getId() + ". " + element.getName() + ": start:" + dateFormat.format(element.getStartDate()) + ", end: " + dateFormat.format(element.getEndDate()) + ", programmers: " + element.getProgrammers() + ", activity: " + element.getActivity());
         }
+    }
+// TO READ THE DATE SAVED IN XML
+    public static Date readDate() {
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse("DB.xml");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            doc.getDocumentElement().normalize();
+            NodeList projectList = doc.getElementsByTagName("date");
+            Node node = projectList.item(0);
+            Element single = (Element) node;
+            Date newDate = dateFormat.parse(single.getElementsByTagName("value").item(0).getTextContent());
+            return newDate;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        Date r = new Date();
+        return r;
     }
 }
 

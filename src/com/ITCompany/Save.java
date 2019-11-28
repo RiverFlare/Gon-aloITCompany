@@ -21,6 +21,7 @@ public class Save {
 
     public static void saveMethod(ArrayList<ActiveProgrammers> list1, ArrayList<ProjectTeam> list2) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse("DB.xml");
@@ -30,13 +31,13 @@ public class Save {
             for (int i = 0; i < projectList.getLength() ; i++) {
                 Node eachNode = projectList.item(i);
                 eachNode.getParentNode().removeChild(eachNode);
+                i--;
             }
 
             //ADD
 
             for (int k = 0; k < list2.size(); k++) {
                 int size = list2.get(k).getProgrammers().size();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String id = String.valueOf(list2.get(k).getId());
                 String name = list2.get(k).getName();
                 String startDate = (dateFormat.format(list2.get(k).getStartDate()));
@@ -62,7 +63,7 @@ public class Save {
                 pEndDate.appendChild(doc.createTextNode(endDate));
                 projectEle.appendChild(pEndDate);
                 for (int i = 0; i < size; i++) {
-                    Element programmerID = doc.createElement("ProgrammerID");
+                    Element programmerID = doc.createElement("programmerID");
                     programmerID.appendChild(doc.createTextNode(Integer.toString(list2.get(k).getProgrammers().get(i))));
                     Element programmerActivity = doc.createElement("programmerActivity");
                     programmerActivity.appendChild(doc.createTextNode(list2.get(k).getActivity().get(i)));
@@ -76,11 +77,11 @@ public class Save {
             for (int i = 0; i < programmerList.getLength(); i++) {
                 Node eachNode = programmerList.item(i);
                 eachNode.getParentNode().removeChild(eachNode);
+                i--;
             }
 
             //ADD Programmers
             for (ActiveProgrammers programmer: list1) {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String id = String.valueOf(programmer.getId());
                 String firstName = programmer.getFirstName();
                 String lastName = programmer.getLastName();
@@ -124,11 +125,27 @@ public class Save {
                 personEle.appendChild(pWage);
             }
 
+            //Remove Date
+
+            NodeList dateList = doc.getElementsByTagName("date");
+            Node node = dateList.item(0);
+            node.getParentNode().removeChild(node);
+
+            //Add date
+            NodeList database = doc.getElementsByTagName("database");
+            Element date = doc.createElement("date");
+            database.item(0).appendChild(date);
+
+            Element today = doc.createElement("value");
+            today.appendChild(doc.createTextNode(dateFormat.format(Menu.getToday())));
+            date.appendChild(today);
+
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
             StreamResult result = new StreamResult(new File("DB.xml"));
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
             transformer.transform(source, result);
         } catch (SAXException | IOException | ParserConfigurationException | TransformerException e) {
             e.printStackTrace();
