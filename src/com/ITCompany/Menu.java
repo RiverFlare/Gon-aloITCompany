@@ -71,8 +71,16 @@ class Menu {
             System.out.println("0.Exit");
             Scanner scanChoice = new Scanner(System.in);
             System.out.println();
-            int menuChoice = scanChoice.nextInt();
-            scanChoice.nextLine();
+            String menuChoiceIn = scanChoice.nextLine();
+//            scanChoice.nextLine();
+            int menuChoice;
+            try {
+                menuChoice = Integer.parseInt(menuChoiceIn);
+            } catch (NumberFormatException e) {
+                System.out.println("Please insert a number!");
+                MenuMethod();
+                break;
+            }
             switch (menuChoice) {
                 case 1:
                     //View Programmers List

@@ -79,6 +79,7 @@ public class ActiveProgrammers {
 
 // TO ADD A NEW PERSON
     void addPerson(ArrayList<ActiveProgrammers> list1) {
+        Date newDate = Parser.readDate();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         ActiveProgrammers p = new ActiveProgrammers();
         int i = list1.size();
@@ -86,18 +87,18 @@ public class ActiveProgrammers {
         int id = p.getId()+1;
         System.out.println("Insert first name:");
         String firstName =  Menu.scanChoice.nextLine();
-        if (firstName == "") {
+        if (firstName.equals("")) {
             System.out.println("No first name inserted");
             return;
         }
         System.out.println("Insert last name:");
         String lastName = Menu.scanChoice.nextLine();
-        if (lastName == "") {
+        if (lastName.equals("")) {
             System.out.println("No last name inserted");
             return;
         }
         System.out.println("Start date will be set as today's date");
-        Date startDate = new Date();
+        Date startDate = newDate;
 
         System.out.println("Insert wage(h)");
         String wageInsert = Menu.scanChoice.nextLine();
@@ -115,7 +116,9 @@ public class ActiveProgrammers {
         System.out.println("Person is created as inactive, change this setting by adding this person to a project");
         this.active = false;
         ActiveProgrammers member = new ActiveProgrammers(id, firstName, lastName, startDate, active, wage);
+        System.out.println("Antes de adicionar:" +list1.size());
         list1.add(member);
+        System.out.println("Depois de adicionar:" +list1.size());
         for (ActiveProgrammers element : list1) {
             System.out.println(element.getId() + ". " + element.getFirstName() + " " + element.getLastName() + ": " + dateFormat.format(element.getStartDate()) + ", active: " + element.isActive() + ", wage(h):" + element.getWage());
         }
@@ -147,6 +150,7 @@ public class ActiveProgrammers {
                         next = true;
                     } catch (Exception e) {
                         System.out.println("Please insert a number!");
+                        return;
                     }
                 }
                 element.setWage(wage);

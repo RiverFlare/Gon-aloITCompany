@@ -40,7 +40,7 @@ public class ProjectTeam {
         System.out.println("Insert project name:");
         String name =  Menu.scanChoice.next();
         System.out.println("Today's date will be used as Start Date");
-        Date startDate = new Date();
+        Date startDate = newDate;
         Date endDate = null;
         boolean next = false;
         while(!next) {
@@ -63,46 +63,58 @@ public class ProjectTeam {
         }
 
         boolean exitStatus = true;
+        int count = 0;
         while(exitStatus==true){
-            System.out.println("Available Programmers: ");
-            int count = 0;
-            for (int j = 0; j < list1.size(); j++) {
-                if(!list1.get(j).isActive()){
-                    System.out.println(list1.get(j).getId()+" - "+list1.get(j).getFirstName());
-                    count++;
-                }
-            }
-            System.out.println("Insert programmer's ID:");
-            int programmerID = Menu.scanChoice.nextInt();
-            for (int j = 0; j <list1.size(); j++) {
-                if(list1.get(j).getId()==programmerID&&list1.get(j).isActive()==true){
-                    System.out.println("The chosen programmer is not available");
-                    addProject(list2, list1, newDate);
-                }
+            count = 0;
+            int countAdded = 0;
+            while ( countAdded < 2) {
+                System.out.println("Available Programmers: ");
 
-            }
+                for (int j = 0; j < list1.size(); j++) {
+                    if (!list1.get(j).isActive()) {
+                        System.out.println(list1.get(j).getId() + " - " + list1.get(j).getFirstName());
+                        count++;
+                    }
+                }
+                System.out.println("Insert programmer's ID:");
+                int programmerID = Menu.scanChoice.nextInt();
+                for (int j = 0; j < list1.size(); j++) {
+                    if (list1.get(j).getId() == programmerID && list1.get(j).isActive() == true) {
+                        System.out.println("The chosen programmer is not available");
+                        addProject(list2, list1, newDate);
+                    }
 
-            programmers.add(programmerID);
-            for (int j = 0; j <list1.size(); j++) {
-                if(list1.get(j).getId()==programmerID){
-                    list1.get(j).setActive(true);
-                    list1.get(j).setStartDate(startDate);
-                    System.out.println("Programmer "+list1.get(j).getId()+" changed status to "+list1.get(j).isActive()+" starting from "+dateFormat.format(list1.get(j).getStartDate()));
-                    count--;
                 }
 
+                programmers.add(programmerID);
+                for (int j = 0; j < list1.size(); j++) {
+                    if (list1.get(j).getId() == programmerID) {
+                        list1.get(j).setActive(true);
+                        list1.get(j).setStartDate(startDate);
+                        System.out.println("Programmer " + list1.get(j).getId() + " changed status to " + list1.get(j).isActive() + " starting from " + dateFormat.format(list1.get(j).getStartDate()));
+                        count--;
+                    }
+
+                }
+                System.out.println("Insert programmer's activity:");
+                String programmerActivity = Menu.scanChoice.next();
+                activity.add(programmerActivity);
+
+                countAdded ++;
             }
-            System.out.println("Insert programmer's activity:");
-            String programmerActivity = Menu.scanChoice.next();
-            activity.add(programmerActivity);
-            System.out.println("Do you want to add another programmer? (y - yes; n - no)");
-            String choice = Menu.scanChoice.next();
+            if(count>1){
+                System.out.println("Do you want to add another programmer? (y - yes; n - no)");
+                String choice = Menu.scanChoice.next();
                 if (!choice.equals("y")) {
                     exitStatus = false;
                 } else if (count==0) {
                     System.out.println("There are no more available programmers");
                     exitStatus = false;
                 }
+            }else if (count==1) {
+                System.out.println("There are no more available programmers");
+                exitStatus = false;
+            }
 
         }
         System.out.println("Exit "+exitStatus);
